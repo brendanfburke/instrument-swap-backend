@@ -7,17 +7,8 @@ const mongoose = require('mongoose')
 
 const app = express()
 
-mongoose.connect(MONGODB_URI)
 
-mongoose.connection.on('open', () => {
-    console.log('MongoDB connected')
-})
-mongoose.connection.on('close', () => {
-    console.log('MongoDB disconnected')
-})    
-mongoose.connection.on('error', (error) => {
-    console.log('error', error)
-})   
+require('./config/db.connection')
 
 
 app.get('/', (req, res) => {
