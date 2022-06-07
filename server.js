@@ -10,7 +10,7 @@ const upload = require('./common')
 
 const db = require("./models")
 
-const { uploadFile } = require('./s3')
+const { uploadFile, getFileStream } = require('./s3')
 
 const fs = require('fs')
 const util  = require('util')
@@ -51,7 +51,7 @@ app.post('/listings', async (req, res, next) => {
 })
 
 app.post("/single", upload.single("image"), async (req, res) => {
-    console.log(req.file);
+    console.log(req.file.filename);
     // uploading to AWS S3
     const result = await uploadFile(req.file);  // Calling above function in s3.js
     console.log("S3 response", result);
@@ -65,7 +65,12 @@ app.post("/single", upload.single("image"), async (req, res) => {
     });
   });
   
-
+  app.get("/images/:key", (req, res) => {
+    const key = req.params.key;
+    console.log(req.params.key);
+    const readStream = getFileStream(key);
+    readStream.pipe(res);  // this line will make image readable
+  });
 
 
 
