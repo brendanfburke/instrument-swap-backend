@@ -76,7 +76,10 @@ app.post("/single", upload.single("image"), async (req, res) => {
 
 
 app.get('/', (req, res) => {
-    res.send('hello World')
+    res.json({
+        status: 'Active',
+        message: 'Site is up and running'
+    })
 })
 
 app.listen(PORT, () => {
