@@ -19,6 +19,10 @@ const unlinkFile = util.promisify(fs.unlink)
 
 const app = express()
 
+app.use(cors())
+app.use(morgan('dev'))
+app.use(express.json())
+
 require('./config/db.connection')
 
 app.get('/users', async (req, res, next) => {
