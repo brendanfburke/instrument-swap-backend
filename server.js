@@ -23,6 +23,8 @@ app.use(cors())
 app.use(morgan('dev'))
 app.use(express.json())
 
+app.use(express.urlencoded({ extended: false }))
+
 require('./config/db.connection')
 
 app.get('/users', async (req, res, next) => {
