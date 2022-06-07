@@ -78,7 +78,7 @@ app.post("/single", upload.single("image"), async (req, res) => {
 app.get('/', (req, res) => {
     res.json({
         status: 'Active',
-        message: 'Site is up and running'
+        message: 'Site available for API access'
     })
 })
 
