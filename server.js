@@ -7,6 +7,10 @@ const mongoose = require('mongoose')
 const cors = require("cors");
 const morgan = require("morgan");
 const upload = require('./common')
+const controllers = require('./controllers')
+
+const session = require('express-session')
+const MongoStore = require('connect-mongo')
 
 const db = require("./models")
 
@@ -23,24 +27,42 @@ app.use(cors())
 app.use(morgan('dev'))
 app.use(express.json())
 
+
 app.use(express.urlencoded({ extended: false }))
+
+app.use(
+    session({
+        store: MongoStore.create({mongoUrl: MONGODB_URI}),
+        secret: 'Secret Value',
+        resave: false,
+        saveUnintialized: false,
+        cookie: {
+            maxAge: 1000 * 60 * 60 * 24 * 7 * 2, // two weeks
+        },
+    })
+)
+
+app.use(function (req, res, next) {
+    res.locals.user = req.session.currentUser;
+    next();
+});
+
+app.use("/", controllers.auth)
 
 require('./config/db.connection')
 
 app.get('/users', async (req, res, next) => {
     try {
         res.json(await db.User.find({}))
-    } catch (error) {
-        res.status(400).json(error)
+    } catch (err) {
+        console.log(err)
+        return res.json({
+            status: 'error',
+            message: err
+        })
     }
 })
-app.post('/users', async (req, res, next) => {
-    try {
-        res.json(await db.User.create(req.body))
-    } catch (error) {
-        res.status(400).json(error)
-    }
-})
+
 app.get('/listings', async (req, res, next) => {
     try {
         res.json(await db.Listing.find({}))
