@@ -48,6 +48,7 @@ app.use(function (req, res, next) {
 });
 
 app.use("/", controllers.auth)
+app.use('/account', controllers.account)
 
 require('./config/db.connection')
 
