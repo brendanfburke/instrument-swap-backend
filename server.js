@@ -70,10 +70,22 @@ app.get('/listings', async (req, res, next) => {
         res.status(400).json(error)
     }
 })
+
+
 app.post('/listings', async (req, res, next) => {
     try {
         res.json(await db.Listing.create(req.body))
     } catch (error) {
+        res.status(400).json(error)
+    }
+})
+app.get('/listings/:id', async (req, res, next) => {
+
+    let id = req.params.id
+
+    try {
+        res.json(await db.Listing.findById(id))
+    } catch {
         res.status(400).json(error)
     }
 })
