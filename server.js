@@ -3,7 +3,6 @@ require('dotenv').config()
 const { PORT, MONGODB_URI } = process.env
 
 const express = require('express')
-const mongoose = require('mongoose')
 const cors = require("cors");
 const morgan = require("morgan");
 const upload = require('./common')
@@ -40,7 +39,7 @@ app.use(
         resave: false,
         saveUnintialized: false,
         cookie: {
-            maxAge: 1000 * 60 * 60 * 24 * 7 * 2, // two weeks
+            maxAge: 1000 * 60 * 60, // two weeks
         },
     })
 )
@@ -53,7 +52,6 @@ app.use(function (req, res, next) {
 app.use(cookieParser('Secret_Value'))
 app.use(passport.initialize())
 app.use(passport.session())
-require('./passport_config')(passport)
 
 app.use("/", controllers.auth)
 app.use('/account', controllers.account)

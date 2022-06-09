@@ -1,16 +1,29 @@
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
-    username: {
+const userSchema = new mongoose.Schema(
+    {
+      username: {
         type: String,
-        required: [true, 'Enter username'],
-        unique: true
+        required: true,
+        unique: true,
+      },
+      password: {
+        type: String,
+        required: true,
+      },
     },
-    password: {
-        type: String,
-        required: [true, 'Enter password']
+    {
+      timestamps: true,
+      toJSON: {
+        virtuals: true,
+        // ret is the returned Mongoose document
+        transform: (_doc, ret) => {
+          delete ret.password;
+          return ret;
+        },
+      },
     }
-}, { timestamps: true })
+  );
 
 const User = mongoose.model('User', userSchema);
 
