@@ -7,6 +7,9 @@ const mongoose = require('mongoose')
 const cors = require("cors");
 const morgan = require("morgan");
 const upload = require('./common')
+const passport = require('passport')
+const passportLocal = require('passport-local')
+const cookieParser = require('cookie-parser')
 const controllers = require('./controllers')
 
 const session = require('express-session')
@@ -33,7 +36,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(
     session({
         store: MongoStore.create({mongoUrl: MONGODB_URI}),
-        secret: 'Secret Value',
+        secret: 'Secret_Value',
         resave: false,
         saveUnintialized: false,
         cookie: {
@@ -46,6 +49,8 @@ app.use(function (req, res, next) {
     res.locals.user = req.session.currentUser;
     next();
 });
+
+app.use(cookieParser('Secret_Value'))
 
 app.use("/", controllers.auth)
 app.use('/account', controllers.account)
