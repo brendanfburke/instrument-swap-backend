@@ -51,6 +51,9 @@ app.use(function (req, res, next) {
 });
 
 app.use(cookieParser('Secret_Value'))
+app.use(passport.initialize())
+app.use(passport.session())
+require('./passport_config')(passport)
 
 app.use("/", controllers.auth)
 app.use('/account', controllers.account)
