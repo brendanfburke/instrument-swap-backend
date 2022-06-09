@@ -49,6 +49,7 @@ app.use(function (req, res, next) {
 
 app.use("/", controllers.auth)
 app.use('/account', controllers.account)
+app.use('/listings', controllers.listings)
 
 require('./config/db.connection')
 
@@ -64,32 +65,7 @@ app.get('/users', async (req, res, next) => {
     }
 })
 
-app.get('/listings', async (req, res, next) => {
-    try {
-        res.json(await db.Listing.find({}))
-    } catch (error) {
-        res.status(400).json(error)
-    }
-})
 
-
-app.post('/listings', async (req, res, next) => {
-    try {
-        res.json(await db.Listing.create(req.body))
-    } catch (error) {
-        res.status(400).json(error)
-    }
-})
-app.get('/listings/:id', async (req, res, next) => {
-
-    let id = req.params.id
-
-    try {
-        res.json(await db.Listing.findById(id))
-    } catch {
-        res.status(400).json(error)
-    }
-})
 
 app.post("/single", upload.single("image"), async (req, res) => {
     console.log(req.file.filename);
