@@ -10,6 +10,17 @@ router.get('/', async (req, res, next) => {
     }
 })
 
+router.get('/:id', async (req, res, next) => {
+    
+    let id = req.params.id
+
+    try {
+        res.json(await Account.findById(id))
+    } catch (err) {
+        console.log(err)
+    }
+})
+
 router.post('/', async (req, res, next) => {
     try {
         const createdAccount = await Account.create(req.body)
