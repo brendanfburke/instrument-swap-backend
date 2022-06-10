@@ -26,7 +26,7 @@ const unlinkFile = util.promisify(fs.unlink)
 const app = express()
 
 app.use(cors({
-    origin: 'http://127.0.0.1:3000'
+    origin: '*'
 }))
 app.use(morgan('dev'))
 app.use(express.json())
