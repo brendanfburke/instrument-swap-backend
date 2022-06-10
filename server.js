@@ -25,7 +25,9 @@ const unlinkFile = util.promisify(fs.unlink)
 
 const app = express()
 
-app.use(cors())
+app.use(cors({
+    origin: 'https://instrument-swap-frontend.herokuapp.com/upload_image'
+}))
 app.use(morgan('dev'))
 app.use(express.json())
 
