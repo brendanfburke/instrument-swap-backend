@@ -27,20 +27,19 @@ router.post('/register', async (req, res, next) => {
         })
     } catch (err) {
         console.log(err)
-        return res.json({
-            status: 'error',
-            message: err
-        })
+        // return res.json({
+        //     status: 'error',
+        //     message: err
+        // })
     }
 } )
 
 router.post('/login', async (req, res, next) => {
     try {
         const foundUser = await User.findOne({ username: req.body.username })
-        console.log(foundUser)
 
         if (!foundUser) {
-            res.json({
+            res.status(400).json({
                 status: 'no user found',
                 message: 'redirect to register page'
             })
@@ -49,7 +48,7 @@ router.post('/login', async (req, res, next) => {
         const match = await bcrypt.compare(req.body.password, foundUser.password)
 
         if (!match) {
-            res.json({
+            res.status(400).json({
                 status: 'password invalid',
                 message: 'enter a valid username or password'
             })
@@ -64,10 +63,10 @@ router.post('/login', async (req, res, next) => {
 
     } catch (err) {
         console.log(err)
-        return res.json({
-            status: 'error',
-            message: err
-        })
+        // return res.json({
+        //     status: 'error',
+        //     message: err
+        // })
     }
     
 
@@ -76,10 +75,11 @@ router.post('/login', async (req, res, next) => {
 
 router.get("/logout", async (req, res) => {
     try {
-        return res.redirect("/login");
+        res.json({
+            status: 'Logged out'
+        })
     } catch (error) {
         console.log(error);
-        return res.send(error);
     }
 });
 
