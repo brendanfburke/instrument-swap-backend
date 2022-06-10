@@ -74,7 +74,7 @@ app.get('/users', async (req, res, next) => {
 
 
 
-app.post("/single", upload.single("image"), async (req, res) => {
+app.post("/single", async (req, res) => {
     console.log(req.file.filename);
     // uploading to AWS S3
     const result = await uploadFile(req.file);  // Calling above function in s3.js
