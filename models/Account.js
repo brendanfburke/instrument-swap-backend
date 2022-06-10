@@ -26,7 +26,8 @@ const accountSchema = new mongoose.Schema({
         type: String,
         unique: [true, 'Email must not already be registered'],
         required: true
-    }
+    },
+    listings: [{type: String}]
 }, { timestamps: true })
 
 const Account = mongoose.model('Account', accountSchema);
