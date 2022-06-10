@@ -25,9 +25,7 @@ const unlinkFile = util.promisify(fs.unlink)
 
 const app = express()
 
-app.use(cors({
-    origin: '*'
-}))
+app.use(cors())
 app.use(morgan('dev'))
 app.use(express.json())
 
@@ -77,19 +75,24 @@ app.get('/users', async (req, res, next) => {
 
 
 app.post("/single", upload.single("image"), async (req, res) => {
-    console.log(req.file.filename);
-    // uploading to AWS S3
-    const result = await uploadFile(req.file);  // Calling above function in s3.js
-    console.log("S3 response", result);
-    // You may apply filter, resize image before sending to client
-    // Deleting from local if uploaded in S3 bucket
-    await unlinkFile(req.file.path);
-    res.send({
-      status: "success",
-      message: "File uploaded successfully",
-      data: req.file,
-    });
+    // console.log(req.file.filename);
+    // // uploading to AWS S3
+    // const result = await uploadFile(req.file);  // Calling above function in s3.js
+    // console.log("S3 response", result);
+    // // You may apply filter, resize image before sending to client
+    // // Deleting from local if uploaded in S3 bucket
+    // await unlinkFile(req.file.path);
+    // res.send({
+    //   status: "success",
+    //   message: "File uploaded successfully",
+    //   data: req.file,
+    // });
+    res.send('hi')
   });
+
+  app.get('/single', (req, res) => {
+      res.send('hi')
+  })
   
   app.get("/images/:key", (req, res) => {
     const key = req.params.key;
