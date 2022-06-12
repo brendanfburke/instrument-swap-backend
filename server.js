@@ -83,7 +83,6 @@ app.get('/users/:id', passport.authenticate('jwt', { session: false }), async (r
             status: 'Youre in brother',
             user: req.id
         })
-        console.log(req.id)
     } catch (err) {
         console.log(err)
         return res.json({
