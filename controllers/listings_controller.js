@@ -12,9 +12,15 @@ router.get('/', async (req, res, next) => {
 })
 
 
-router.post('/new', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+router.post('/new', async (req, res, next) => {
     try {
         res.json(await Listing.create(req.body))
+    } catch (error) {
+        res.status(400).json(error)
+    }
+})
+router.get('/new', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
+    try {
         res.json(await req.user)
     } catch (error) {
         res.status(400).json(error)
