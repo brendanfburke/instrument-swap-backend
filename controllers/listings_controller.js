@@ -5,7 +5,7 @@ const passport = require('passport')
 
 router.get('/', async (req, res, next) => {
     try {
-        res.json(await Listing.find({}), await req.user)
+        res.json(await Listing.find({}))
     } catch (error) {
         res.status(400).json(error)
     }
