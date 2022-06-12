@@ -37,4 +37,13 @@ router.get('/:id', async (req, res, next) => {
     }
 })
 
+router.delete('/:id', async (req, res, next) => {
+    let id = req.params.id
+    try {
+        res.json(await Listing.findByIdAndDelete(id))
+    } catch (error) {
+        res.status(400).json(error)
+    }
+})
+
 module.exports = router
