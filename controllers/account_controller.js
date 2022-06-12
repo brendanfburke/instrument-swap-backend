@@ -5,7 +5,7 @@ const passport = require('passport')
 
 router.get('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     try {
-        res.json(await req.user.id)
+        res.json(await req.user)
     } catch (err) {
         console.log(err)
     }
