@@ -1,19 +1,21 @@
 const express = require('express')
 const router = express.Router()
 const { Listing } = require('../models')
+const passport = require('passport')
 
 router.get('/', async (req, res, next) => {
     try {
-        res.json(await Listing.find({}))
+        res.json(await Listing.find({}), await req.user)
     } catch (error) {
         res.status(400).json(error)
     }
 })
 
 
-router.post('/', async (req, res, next) => {
+router.post('/new', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     try {
         res.json(await Listing.create(req.body))
+        res.json(await req.user)
     } catch (error) {
         res.status(400).json(error)
     }
