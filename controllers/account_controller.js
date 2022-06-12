@@ -1,10 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const { Account } = require('../models')
+const passport = require('passport')
 
-router.get('/', async (req, res, next) => {
+router.get('/', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     try {
-        res.json(await Account.find({}))
+        res.json(await req.user.id)
     } catch (err) {
         console.log(err)
     }
