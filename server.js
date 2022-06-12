@@ -76,14 +76,15 @@ app.get('/users', async (req, res, next) => {
 
 app.get('/users/:id', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     try {
-        // const id = req.params.id
-        // res.json(await db.User.findById(id))
+        const id = req.user.id
+        res.json(await db.User.findById(id))
         
-        res.json({
-            status: 'Youre in brother',
-            monkey: 'see monkey do',
-            user: req.user.id
-        })
+        // res.json({
+        //     status: 'Youre in brother',
+        //     monkey: 'see monkey do',
+        //     user: req.user.id
+        // })
+
     } catch (err) {
         console.log(err)
         return res.json({
