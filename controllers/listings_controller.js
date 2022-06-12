@@ -46,4 +46,14 @@ router.delete('/:id', async (req, res, next) => {
     }
 })
 
+
+router.put('/:id/update', async (req, res, next) => {
+    let id = req.params.id
+    try {
+        res.json(await Listing.findByIdAndUpdate(id, req.body))
+    } catch (error) {
+        res.status(400).json(error)
+    }
+})
+
 module.exports = router
