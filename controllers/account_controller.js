@@ -16,7 +16,7 @@ router.get('/:id', async (req, res, next) => {
     let id = req.params.id
 
     try {
-        res.json(await Account.findById(id))
+        res.json(await Account.find({}))
     } catch (err) {
         console.log(err)
     }
