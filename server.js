@@ -72,6 +72,18 @@ app.get('/users', async (req, res, next) => {
     }
 })
 
+app.get('/users/:id', async (req, res, next) => {
+    try {
+        const id = req.params.id
+        res.json(await db.User.findById(id))
+    } catch (err) {
+        console.log(err)
+        return res.json({
+            status: 'error',
+            message: err
+        })
+    }
+})
 
 
 app.post("/single", upload.single("image"), async (req, res) => {

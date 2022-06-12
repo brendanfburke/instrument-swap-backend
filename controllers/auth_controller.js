@@ -3,7 +3,7 @@ const router = express.Router()
 const bcrypt = require('bcryptjs')
 const { User } = require('../models')
 const passport = require('passport')
-const { createUserToken } = require("../passport_config");
+const { createUserToken, authenticateToken } = require("../passport_config");
 
 
 router.post('/register', async (req, res, next) => {
