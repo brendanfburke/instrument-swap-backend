@@ -39,7 +39,7 @@ router.post('/login', async (req, res, next) => {
         const foundUser = await User.findOne({ username: req.body.username })
 
         if (!foundUser) {
-            res.status(400).json({
+            res.json({
                 status: 'no user found',
                 message: 'redirect to register page'
             })
@@ -48,7 +48,7 @@ router.post('/login', async (req, res, next) => {
         const match = await bcrypt.compare(req.body.password, foundUser.password)
 
         if (!match) {
-            res.status(400).json({
+            res.json({
                 status: 'password invalid',
                 message: 'enter a valid username or password'
             })
