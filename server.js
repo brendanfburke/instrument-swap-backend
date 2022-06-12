@@ -7,9 +7,10 @@ const cors = require("cors");
 const morgan = require("morgan");
 const upload = require('./common')
 const passport = require('passport')
-const passportLocal = require('passport-local')
 const cookieParser = require('cookie-parser')
 const controllers = require('./controllers')
+const requireToken = require('./passport_config')
+const passportJWT = require('passport-jwt')
 
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
@@ -19,7 +20,8 @@ const db = require("./models")
 const { uploadFile, getFileStream } = require('./s3')
 
 const fs = require('fs')
-const util  = require('util')
+const util  = require('util');
+const { Passport } = require('passport');
 const unlinkFile = util.promisify(fs.unlink)
 
 
@@ -72,10 +74,14 @@ app.get('/users', async (req, res, next) => {
     }
 })
 
-app.get('/users/:id', async (req, res, next) => {
+app.get('/users/:id', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     try {
-        const id = req.params.id
-        res.json(await db.User.findById(id))
+        // const id = req.params.id
+        // res.json(await db.User.findById(id))
+        res.json({
+            status: 'Youre in brother'
+        })
+        console.log(req.id)
     } catch (err) {
         console.log(err)
         return res.json({
